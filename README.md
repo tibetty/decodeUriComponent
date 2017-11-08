@@ -19,4 +19,4 @@ console.log(decodeUriComponent(encodedStr));	// --> '2.8i手动5速'
 
 Dependency
 ---------------
-None but using arrow function
+None but using ES6 arrow function
