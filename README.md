@@ -1,7 +1,7 @@
 decodeUriComponent
 ==========
 
-A pretty fast yet robust decodeURIComponent implementation that supports unicode support
+A pretty fast yet robust decodeURIComponent implementation that supports unicode decoding
 ## Installation
 
 ```
