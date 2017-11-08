@@ -1,7 +1,7 @@
 {
   "name": "decodeuricomponent",
   "version": "0.0.1",
-  "description": "A pretty fast but robust decodeURLComponent implementation that supports unicode decoding",
+  "description": "A pretty fast yet robust decodeURLComponent implementation that supports unicode decoding",
   "main": "index.js",
   "scripts": {
     "test": "node test.js"
