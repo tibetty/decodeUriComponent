@@ -10,7 +10,7 @@ npm install decodeUriComponent
 
 ## Usage
 ```javascript
-const decodeUriComponent = require('decodeUriComponent');
+const decodeUriComponent = require('decodeuricomponent');
 
 let encodedStr = '2%2e8i%u624b%u52a85%u901f';
 console.log(decodeUriComponent(encodedStr));	// --> '2.8i手动5速'
