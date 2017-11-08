@@ -1,0 +1,26 @@
+{
+  "name": "decodeuricomponent",
+  "version": "0.0.1",
+  "description": "A pretty fast but robust decodeURLComponent implementation that supports unicode decoding",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tibetty/decodeUriComponent.git"
+  },
+  "keywords": [
+    "decodeURIComponent",
+    "unicode",
+    "utf8",
+    "utf-8",
+    "uriencoding"
+  ],
+  "author": "tibetty",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tibetty/decodeUriComponent/issues"
+  },
+  "homepage": "https://github.com/tibetty/decodeUriComponent#readme"
+}
