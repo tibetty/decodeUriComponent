@@ -5,7 +5,7 @@ A pretty fast yet robust decodeURIComponent implementation that supports unicode
 ## Installation
 
 ```
-npm install decodeUriComponent
+npm install decodeuricomponent
 ```
 
 ## Usage
