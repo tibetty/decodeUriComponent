@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/tibetty/decodeUriComponent/issues"
   },
-  "homepage": "https://github.com/tibetty/decodeUriComponent#readme"
+  "homepage": "https://github.com/tibetty/decodeUriComponent#readme",
+  "dependencies": {
+    "iconv-lite": "^0.4.19"
+  }
 }

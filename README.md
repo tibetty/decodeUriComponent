@@ -1,7 +1,7 @@
 decodeUriComponent
 ==========
 
-A pretty fast yet robust decodeURIComponent implementation that supports unicode decoding
+A pretty fast yet robust decodeURIComponent implementation that supports unicode decoding -- per one user's requirement, custom encoding support has also been added
 ## Installation
 
 ```
@@ -12,11 +12,12 @@ npm install decodeuricomponent
 ```javascript
 const decodeUriComponent = require('decodeuricomponent');
 
-let encodedStr = '2%2e8i%u624b%u52a85%u901f';
-console.log(decodeUriComponent(encodedStr));	// --> '2.8i手动5速'
+console.log(decodeUriComponent('2%2e8i%u624b%u52a85%u901f'));	// --> '2.8i手动5速'
+console.log(decodeUriComponent('%b7%fe%d7%b0', 'gbk'));		// --> '服装'
 ```
 
 
 Dependency
 ---------------
-None but using ES6 arrow function
+* Use iconv-lite to make encoding conversion;
+* Arrow function feature of ES6

@@ -1,4 +1,21 @@
-module.exports = s => s.split(/(%u[0-9a-f]{4})/gi).map(v => {
-	if (v.match(/%u[0-9a-f]{4}/gi)) return String.fromCodePoint(parseInt(v.substring(2), 16));
-	else return decodeURIComponent(v);
-}).join('');
+const iconv = require('iconv-lite');
+
+module.exports = (s, enc) => {
+    if (enc) return ((s, enc) => {
+        let regex = /(%([0-9a-f]{2}))+/gi;
+        let res = null, lastIdx = 0, parts = [];
+        while (res = regex.exec(s)) {
+            parts.push(s.substring(lastIdx, regex.lastIndex - res[0].length));
+            parts.push(iconv.decode(new Buffer(res[0].split(/%([0-9a-f]{2})/).reduce((buff, v) => {
+                if (v !== '') buff.push(parseInt(v, 16));
+                return buff;
+            }, [])), enc));
+            lastIdx = regex.lastIndex;
+        }
+        return parts.join('');
+    })(s, enc);
+    else return (s => s.split(/(%u[0-9a-f]{4})/gi).map(v => {
+        if (v.match(/%u[0-9a-f]{4}/gi)) return String.fromCodePoint(parseInt(v.substring(2), 16));
+        else return decodeURIComponent(v);
+    }).join(''))(s);
+}
