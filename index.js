@@ -1,7 +1,7 @@
 const iconv = require('iconv-lite');
 
-module.exports = (s, enc) => 
-    enc? ((s, enc) => {
+module.exports = (s, enc) =>
+    enc ? ((s, enc) => {
         let regex = /(%([0-9a-f]{2}))+/gi;
         let res = null, lastIdx = 0, parts = [];
         while (res = regex.exec(s)) {
@@ -13,5 +13,5 @@ module.exports = (s, enc) =>
             lastIdx = regex.lastIndex;
         }
         return parts.join('');
-    })(s, enc) : 
-    (s => s.split(/(%u[0-9a-f]{4})/gi).map(v => v.match(/%u[0-9a-f]{4}/gi)? String.fromCodePoint(parseInt(v.substring(2), 16)) : decodeURIComponent(v)).join(''))(s);
+    })(s, enc) : (s => s.split(/(%u[0-9a-f]{4})/gi).map(v =>
+        v.match(/%u[0-9a-f]{4}/gi) ? String.fromCodePoint(parseInt(v.substring(2), 16)) : decodeURIComponent(v)).join(''))(s);
