@@ -12,10 +12,17 @@
   },
   "keywords": [
     "decodeURIComponent",
+    "decodeURI",
+    "unescape",
+    "uri-encoding",
+    "url-encoding",
     "unicode",
-    "utf8",
     "utf-8",
-    "uriencoding"
+    "gbk",
+    "gb2312",
+    "big-5",
+    "shift_jis",
+    "euc-jp"
   ],
   "author": "tibetty",
   "license": "ISC",
