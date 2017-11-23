@@ -14,4 +14,4 @@ module.exports = (s, enc) =>
         }
         return parts.join('');
     })(s, enc) : (s => s.split(/(%u[0-9a-f]{4})/gi).map(v =>
-        v.match(/%u[0-9a-f]{4}/gi) ? String.fromCodePoint(parseInt(v.substring(2), 16)) : decodeURIComponent(v)).join(''))(s);
+        v.match(/%u[0-9a-f]{4}/gi) ? unescape(v) : decodeURIComponent(v)).join(''))(s);
