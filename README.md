@@ -1,7 +1,7 @@
 decodeUriComponent
 ==========
 
-A pretty fast yet robust decodeURIComponent implementation that supports unicode decoding -- per one user's requirement, custom encoding support has also been added
+A pretty fast yet robust decodeURIComponent implementation that supports unicode decoding (i.e. %uxxxx). Now also support other custom encodings such as gbk, big5, shift-jis, euc-jp, etc.
 ## Installation
 
 ```
