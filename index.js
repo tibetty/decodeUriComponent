@@ -6,7 +6,7 @@ module.exports = (s, enc) =>
         let res = null, lastIdx = 0, parts = [];
         while (res = regex.exec(s)) {
             parts.push(s.substring(lastIdx, regex.lastIndex - res[0].length));
-            parts.push(iconv.decode(new Buffer(res[0].split(/%([0-9a-f]{2})/).reduce((buff, v) => {
+            parts.push(iconv.decode(new Buffer(res[0].split(/%([0-9a-f]{2})/i).reduce((buff, v) => {
                 if (v !== '') buff.push(parseInt(v, 16));
                 return buff;
             }, [])), enc));
