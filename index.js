@@ -12,6 +12,7 @@ module.exports = (s, enc) =>
             }, [])), enc));
             lastIdx = regex.lastIndex;
         }
+        parts.push(s.substring(lastIdx, s.length));
         return parts.join('');
     })(s, enc) : (s => s.split(/(%u[0-9a-f]{4})/gi).map(v =>
         v.match(/%u[0-9a-f]{4}/gi) ? unescape(v) : decodeURIComponent(v)).join(''))(s);
