@@ -6,8 +6,8 @@ const decodeUriComponent = require('./index.js');
         expected: '中國',
     },
     {
-        decodeString: '2%2e8i%u624b%u52a85%u901f',
-        expected: '2.8i手动5速',
+        decodeString: '2%2e8i%u624b%u52a85%u901fabc',
+        expected: '2.8i手动5速abc',
     },
     {
         decodeString: '%b7%fe%d7%b0',
@@ -15,9 +15,14 @@ const decodeUriComponent = require('./index.js');
         expected: '服装',
     },
     {
-        decodeString: '%EE%F9%E4%20%EE%F9%E4',
+        decodeString: 'abc%EE%F9%E4%20abc%EE%F9%E4abc',
         decodeEncoding: 'windows-1255',
-        expected: 'משה משה'
+        expected: 'abcמשה abcמשהabc'
+    },
+    {
+        decodeString: 'abcdefg',
+        decodeEncoding: 'windows-1255',
+        expected: 'abcdefg'
     }
 ].forEach(function(testCase) {
     var actual;
