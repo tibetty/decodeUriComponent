@@ -128,6 +128,15 @@ function fail(message) {
     {
         decodeString: '%ed%a0%80',
         expected: '%ed%a0%80',
+    },
+    // whole-string fast path: native decode succeeds, and native decode throws
+    {
+        decodeString: 'a%2Fb%20c',
+        expected: 'a/b c',
+    },
+    {
+        decodeString: '%2F%e4',
+        expected: '/%e4',
     }
 ].forEach(function(testCase) {
     var actual;

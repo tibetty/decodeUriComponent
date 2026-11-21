@@ -45,6 +45,14 @@ function decodeUtf8(run) {
 }
 
 module.exports = (s, enc) => {
+    // A successful native decode is identical to the lenient result, so try it first.
+    if (!enc && !/%u/i.test(s)) {
+        try {
+            return decodeURIComponent(s);
+        } catch (e) {
+            // Not valid on its own, so fall through to the scan below.
+        }
+    }
     const regex = /%u([0-9a-f]{4})|((?:%[0-9a-f]{2})+)/gi;
     const parts = [];
     let last = 0;
