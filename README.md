@@ -21,4 +21,4 @@ console.log(decodeUriComponent('%b7%fe%d7%b0', 'gbk'));		// --> '服装'
 Dependency
 ---------------
 * Use iconv-lite to make encoding conversion;
-* Arrow function feature of ES6
+* Node.js 18 or later

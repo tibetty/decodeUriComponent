@@ -1,5 +1,7 @@
 const decodeUriComponent = require('./index.js');
 
+process.on('warning', w => { if (w.name === 'DeprecationWarning') { process.stdout.write('Failed: ' + w.message + '\n'); process.exit(1); } });
+
 [
     {
         decodeString: '%e4%b8%ad%e5%9c%8b',
@@ -13,6 +15,20 @@ const decodeUriComponent = require('./index.js');
         decodeString: '%b7%fe%d7%b0',
         decodeEncoding: 'gbk',
         expected: '服装',
+    },
+    {
+        decodeString: '%B7%FE%D7%B0',
+        decodeEncoding: 'gbk',
+        expected: '服装',
+    },
+    {
+        decodeString: '%b7%fe%d7%b0.txt',
+        decodeEncoding: 'gbk',
+        expected: '服装.txt',
+    },
+    {
+        decodeString: '%E4%B8%AD%u624b',
+        expected: '中手',
     },
     {
         decodeString: 'abc%EE%F9%E4%20abc%EE%F9%E4abc',
