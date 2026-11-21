@@ -1,8 +1,14 @@
 {
   "name": "decodeuricomponent",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "description": "A pretty fast yet robust decodeURLComponent implementation that supports unicode decoding",
   "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "test": "node test.js"
   },
@@ -31,6 +37,6 @@
   },
   "homepage": "https://github.com/tibetty/decodeUriComponent#readme",
   "dependencies": {
-    "iconv-lite": "^0.4.19"
+    "iconv-lite": "^0.7.3"
   }
 }
