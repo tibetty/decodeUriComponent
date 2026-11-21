@@ -2,6 +2,15 @@ const decodeUriComponent = require('./index.js');
 
 process.on('warning', w => { if (w.name === 'DeprecationWarning') { process.stdout.write('Failed: ' + w.message + '\n'); process.exit(1); } });
 
+function pass() {
+    process.stdout.write('OK\n');
+}
+
+function fail(message) {
+    process.stdout.write(message + '\n');
+    process.exit(1);
+}
+
 [
     {
         decodeString: '%e4%b8%ad%e5%9c%8b',
@@ -39,6 +48,86 @@ process.on('warning', w => { if (w.name === 'DeprecationWarning') { process.stdo
         decodeString: 'abcdefg',
         decodeEncoding: 'windows-1255',
         expected: 'abcdefg'
+    },
+    // unicode escapes, in both modes
+    {
+        decodeString: '%uD83D%uDE00',
+        expected: '😀',
+    },
+    {
+        decodeString: '%uD83D%uDE00',
+        decodeEncoding: 'gbk',
+        expected: '😀',
+    },
+    {
+        decodeString: 'a%u624b',
+        decodeEncoding: 'gbk',
+        expected: 'a手',
+    },
+    {
+        decodeString: '%b7%fe%u624b%d7%b0',
+        decodeEncoding: 'gbk',
+        expected: '服手装',
+    },
+    // literal '%' that does not start an escape
+    {
+        decodeString: '100%',
+        expected: '100%',
+    },
+    {
+        decodeString: '%zz',
+        expected: '%zz',
+    },
+    {
+        decodeString: 'a%u12',
+        expected: 'a%u12',
+    },
+    {
+        decodeString: '%',
+        expected: '%',
+    },
+    {
+        decodeString: 'a%u12',
+        decodeEncoding: 'gbk',
+        expected: 'a%u12',
+    },
+    // '+' stays '+', plain text passes through
+    {
+        decodeString: 'a+b',
+        expected: 'a+b',
+    },
+    {
+        decodeString: 'plain text',
+        expected: 'plain text',
+    },
+    {
+        decodeString: '',
+        expected: '',
+    },
+    // valid and invalid byte escapes in the same run
+    {
+        decodeString: '%41%42c',
+        expected: 'ABc',
+    },
+    {
+        decodeString: '%e4',
+        expected: '%e4',
+    },
+    {
+        decodeString: '%E4%B8%AD%e4',
+        expected: '中%e4',
+    },
+    {
+        decodeString: '%ff%41',
+        expected: '%ffA',
+    },
+    {
+        decodeString: '%c0%af',
+        expected: '%c0%af',
+    },
+    {
+        decodeString: '%ed%a0%80',
+        expected: '%ed%a0%80',
     }
 ].forEach(function(testCase) {
     var actual;
@@ -48,9 +137,41 @@ process.on('warning', w => { if (w.name === 'DeprecationWarning') { process.stdo
         actual = decodeUriComponent(testCase.decodeString);
     }
     if (actual === testCase.expected) {
-        process.stdout.write('OK\n');
+        pass();
     } else {
-        process.stdout.write(`Failed (decodeString=${testCase.decodeString}, decodeEncoding=${testCase.decodeEncoding}, expected=${testCase.expected}, actual=${actual})\n`)
-        process.exit(1)
+        fail(`Failed (decodeString=${testCase.decodeString}, decodeEncoding=${testCase.decodeEncoding}, expected=${testCase.expected}, actual=${actual})`);
     }
 });
+
+// an unknown encoding still throws iconv's error
+try {
+    decodeUriComponent('%41', 'nope-enc');
+    fail('Failed (unknown encoding did not throw)');
+} catch (e) {
+    pass();
+}
+
+// deterministic PRNG, no Math.random
+function makeRandom(seed) {
+    let state = seed >>> 0;
+    return function() {
+        state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
+        return state / 4294967296;
+    };
+}
+
+const alphabet = ['%', 'u', 'e', '4', 'b', 'Z', 'a', '0', 'f', 'D', '8'];
+const random = makeRandom(20261121);
+for (let n = 0; n < 2000; n++) {
+    let input = '';
+    const length = Math.floor(random() * 21);
+    for (let i = 0; i < length; i++) {
+        input += alphabet[Math.floor(random() * alphabet.length)];
+    }
+    try {
+        decodeUriComponent(input);
+    } catch (e) {
+        fail(`Failed (fuzz input=${JSON.stringify(input)} threw ${e})`);
+    }
+}
+pass();
